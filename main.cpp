@@ -14,7 +14,11 @@ void debugmode(string state, string mode, string location) {
 void main_menu() {
     system("cls");
 
-    cout << setw(24) << setfill('*') << " Main Menu ";
+    cout << setw(24) << " Main Menu " << endl;
+    cout << setw(24) << "1. Start Game" << endl << endl;
+    cout << setw(24) << "2. Exit" << endl << endl;
+    cin.get();
+
 }
 
 int main() {
@@ -25,9 +29,6 @@ int main() {
     //notes on what to implement
     // function that when game start it opens saved info
     //function that displays gui secretly, rooms as functions
-
-
-
 
     main_menu();
 
