@@ -3,6 +3,8 @@
 #include <windows.h>
 #include <mmsystem.h>
 
+#pragma comment(lib, "winmm.lib")
+
 using namespace std;
 
 void help() {
@@ -15,9 +17,9 @@ void help() {
 //     - quit       → exit game
 }
 
-void playSound(string sound) {
-    if (sound == "notify") {
-        PlaySound(TEXT("notify.wav"), NULL, SND_FILENAME | SND_ASYNC);
+void game_PlaySound(string sound) {
+    if (sound == "notify")
+    {PlaySound(TEXT("sounds\\notify.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
 
 }
@@ -31,10 +33,13 @@ void Startup(bool game_firstStartup) {
         cout << "[STATION: ASTRA-7 ORBITAL RESEARCH FACILITY]" << endl;
         Sleep(1000);
         cout << "[ALERT: LIFE SUPPORT FAILURE DETECTED]" << endl;
+        game_PlaySound("notify");
         Sleep(1000);
         cout << "[ALERT: POWER SYSTEMS AT 12% CAPACITY]" << endl;
+        game_PlaySound("notify");
         Sleep(1000);
         cout << "[ALERT: ESCAPE SHUTTLE OFFLINE]" << endl << endl;
+        game_PlaySound("notify");
         Sleep(1000);
 
         for (int i = 0 ; i < 4 ; i++) {
@@ -88,7 +93,7 @@ void Startup(bool game_firstStartup) {
 }
 
 int main() {
-    bool game_over = false, game_active = false, game_firstStartup = true;
+    bool game_over = false, game_active = false, firstStartup = true;
 
     string game_mode = "menu", game_state = "main_menu", game_location = "main menu";
 
@@ -120,7 +125,7 @@ int main() {
     } while (!game_active);
 
     game_location = "Living Quarters";
-    Startup(game_firstStartup);
+    Startup(firstStartup);
 
     return 0;
 }
