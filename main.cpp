@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include <mmsystem.h>
 
 using namespace std;
 
@@ -12,6 +13,13 @@ void help() {
 //     - use [item] → use an item in your inventory
 //     - inv        → view items you are carrying
 //     - quit       → exit game
+}
+
+void playSound(string sound) {
+    if (sound == "notify") {
+        PlaySound(TEXT("notify.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    }
+
 }
 
 void Startup(bool game_firstStartup) {
