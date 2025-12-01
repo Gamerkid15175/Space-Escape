@@ -2,11 +2,13 @@
 #include <string>
 #include <windows.h>
 #include <mmsystem.h>
+#include <cstdlib>
 
 #pragma comment(lib, "winmm.lib")
 
 using namespace std;
 
+void mainmenu();
 void help();
 void game_PlaySound(string sound);
 void Startup(bool game_firstStartup);
@@ -30,31 +32,9 @@ int main() {
     // To-Do
     // 11-2-25 Add global bools for each room, first time in room? if so play first entrance sequence, if no then play standard sequence.
     // Thinking about changing story to my trauma team story.
-    do {
-        system("cls");
-        cout << "*********************" << endl;
-        cout << "Main Menu" << endl;
-        cout << "*********************" << endl;
 
-        cout << "1. Start Game" << endl << endl;
-        cout << "2. Exit" << endl << endl;
+    mainmenu();
 
-        int choice;
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                game_active = true;
-                currentRoom = "LivingQuarters";
-                break;
-            case 2:
-                return 1;
-                break;
-            case 3:
-                help();
-                break;
-        }
-    } while (!game_active);
 
     game_location = "Living Quarters";
     Startup(firstStartup);
@@ -98,6 +78,36 @@ int main() {
 }
 
 
+void mainmenu() {
+    bool game_active;
+    game_PlaySound("menu");
+    do {
+        system("cls");
+        cout << "*********************" << endl;
+        cout << "Main Menu" << endl;
+        cout << "*********************" << endl;
+
+        cout << "1. Start Game" << endl << endl;
+        cout << "2. Exit" << endl << endl;
+
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                game_active = true;
+                currentRoom = "LivingQuarters";
+                break;
+            case 2:
+                exit(0);
+                break;
+            case 3:
+                help();
+                break;
+        }
+    } while (!game_active);
+}
+
 void help() {
     cout << "\33[31m- look       \33[0m\>describe your current surroundings" << endl;
     cout << "\33[31m- go [dir]   \33[0m\>go north, south, east, or west" << endl;
@@ -116,6 +126,10 @@ void game_PlaySound(string sound) {
     {
         PlaySound(TEXT("sounds\\notify.wav"), NULL, SND_FILENAME | SND_ASYNC);
     }
+    if(sound == "menu")
+    {
+    PlaySound(TEXT("sounds\\facades.wav"), NULL, SND_ASYNC);
+    }
 
 }
 
@@ -123,35 +137,26 @@ void Startup(bool game_firstStartup) {
     //function that check if its your first startup, if so do the initial startup sequence
     if (game_firstStartup) {
         system("CLS");
-        cout << "[INITIALIZING TERMINAL CONNECTION...]" << endl;
+        cout << "[BOOT SEQUENCE INITIALIZING...]" << endl;
         Sleep(2000);
-        cout << "[CONNECTION ESTABLISHED]" << endl;
-        Sleep(6000);
-        cout << "[STATION: ASTRA-7 ORBITAL RESEARCH FACILITY]" << endl;
+        cout << "[CRYOPOD STATUS: STABLE]" << endl;
+        Sleep(2000);
+        cout << "[TEMPERATURE: -142°C]" << endl;
         Sleep(1000);
-        cout << "[ALERT: LIFE SUPPORT FAILURE DETECTED]" << endl;
-        game_PlaySound("notify");
-        Sleep(1000);
-        cout << "[ALERT: POWER SYSTEMS AT 12% CAPACITY]" << endl;
-        game_PlaySound("notify");
-        Sleep(1000);
-        cout << "[ALERT: ESCAPE SHUTTLE OFFLINE]" << endl << endl;
-        game_PlaySound("notify");
-        Sleep(1000);
+        cout << "[CREW MEMBER: UNKNOWN - LIFE SIGNS DETECTED]" << endl;
+        Sleep(3000);
 
-        for (int i = 0 ; i < 4 ; i++) {
-            Sleep(1000);
-            cout << ".";
-        }
 
         cout << endl << endl << endl;
         //dialogue
-        cout << "You wake to the sound of distant alarms and flickering emergency lights." << endl;
-        cout << "The air tastes metallic. Gravity is unstable—tools float, then clatter to the floor." << endl << endl;
+        cout << "Darkness. Silence." << endl;
+        Sleep(1000);
+        cout << "You float in half-conscious thought, your mind flickering between dreams and static." << endl << endl;
 
-        cout << "A voice crackles through the intercom, distorted and fragmented:" << endl << endl;
+        cout << "Something..." << endl; Sleep(1000);
 
-        cout << "\" crew of Astra-7... catastrophic failure in primary reactor..." << endl;
+        cout << " is wrong. You can *feel* the hum of machinery dying around you." << endl;
+
         cout << "all personnel must evacuate immediately...\"" << endl << endl;
 
         cout << "The message loops once, then dies in static." << endl << endl;
