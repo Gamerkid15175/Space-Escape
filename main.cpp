@@ -38,7 +38,7 @@ int main() {
 
     game_location = "Living Quarters";
     Startup(firstStartup);
-
+    game_active = true;
     //Game Loop
     while(game_active) {
         cout << currentRoom << endl;
@@ -68,10 +68,6 @@ int main() {
         else {
             RoomFunction(choice, currentRoom); //get current room and do action from commands list
         }
-
-
-
-
     }
 
     return 0;
@@ -117,7 +113,7 @@ void help() {
     cout << "\33[31m- inv        \33[0m\>view items you are carrying" << endl;
     cout << "\33[31m- help       \33[0m\>print commands" << endl;
     cout << "\33[31m- quit       \33[0m\>exit game" << endl;
-    Sleep(4000);
+    cin.get();
 
 }
 
@@ -136,6 +132,7 @@ void game_PlaySound(string sound) {
 void Startup(bool game_firstStartup) {
     //function that check if its your first startup, if so do the initial startup sequence
     if (game_firstStartup) {
+        string choice;
         system("CLS");
         cout << "[BOOT SEQUENCE INITIALIZING...]" << endl;
         Sleep(2000);
@@ -149,38 +146,63 @@ void Startup(bool game_firstStartup) {
 
         cout << endl << endl << endl;
         //dialogue
-        cout << "Darkness. Silence." << endl;
+        cout << "Darkness." << Sleep(2000)<< "Silence. " << endl;
         Sleep(1000);
-        cout << "You float in half-conscious thought, your mind flickering between dreams and static." << endl << endl;
 
-        cout << "Something..." << endl; Sleep(1000);
+        cout << "You float in half-conscious thought, your mind flickering between dreams and static." << endl;
+        cout << "Something..."; Sleep(1000);
+        cout << " is wrong. You can feel the hum of machinery dying around you." << endl << endl;
 
-        cout << " is wrong. You can *feel* the hum of machinery dying around you." << endl;
+        cout << "> You are trapped in a cryopod." << endl;
+        cout << ">Type \"wake\" to attempt to exit cyrosleep." << endl ;
 
-        cout << "all personnel must evacuate immediately...\"" << endl << endl;
+        do {
+            cin >> choice;
+        }while (choice != "wake");
+        system("CLS");
+        cout << "You strain to move, but your body doesn’t respond." << endl;
+        cout << "A dull ache spreads through your chest — your heartbeat slow and heavy." << endl << endl;
 
-        cout << "The message loops once, then dies in static." << endl << endl;
+        cout << "[WARNING: CORE POWER FAILURE]"<< endl;
+        cout << "[MANUAL OVERRIDE REQUIRED]" << endl << endl;
 
-        cout << "You are alone in your sleeping quarters." << endl;
-        cout << "The door to the hallway hums faintly, half-powered." << endl << endl;
+        cout << "Your eyelids flutter open briefly." << endl;
+        cout << "The cryopod glass is fractured. Ice crystals bloom across your vision." << endl << endl;
 
-        cout << "> A terminal panel nearby flickers with a prompt:" << endl;
-        cout << "**Type \"help\" for a list of available commands.**" << endl; //
+        cout << "You try to remember your name, but all you hear is the alarm tone, muffled and distant." << endl << endl;
+
+        cout << "> Try again?" << endl;
+
+        do {
+            cin >> choice;
+        }while (choice != "wake");
+        system("CLS");
+
+        cout << "[OVERRIDE ACCEPTED...]"<< endl;
+        cout << "[HEATING ELEMENTS ENGAGED]"<< endl;
+        cout << "[DECOMPRESSING CHAMBER...]"<< endl << endl;
+
+        cout << "A hiss of vapor erupts around you. The glass door jerks open violently, releasing a rush of freezing mist."<< endl;
+        cout << "You collapse forward, coughing—lungs burning, muscles trembling."<< endl << endl;
+
+        cout << "The floor is cold steel. You drag yourself upright, gasping for air."<< endl << endl;
+
+        cout << "Rows of other cryopods line the room—dark, lifeless."<< endl;
+        cout << "Only yours glows faintly."<< endl << endl
         ;
-        string choice;
-        cin >> choice;
+        cout << "A faint terminal light flickers nearby, casting green across the frost."<< endl << endl;
+
+        cout << "> Type \"look\" to examine your surroundings."<< endl;
 
         //player has too type help fist then after reading the commands type look; then begin play
-        if (choice == "help") {
-            help();
-        }
 
         cout << "**type \"look\" to start the game." << endl;
+        cin>>choice;
     }
 }
 
 void RoomFunction(string action,string currentroom) {
-    //RoomFunction should controller the flow of everyroom
+    //RoomFunction should control the flow of everyroom
     if (currentroom == "LivingQuarters") {
         LivingQuarters(action);
     }
